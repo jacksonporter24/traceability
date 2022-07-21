@@ -6,12 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie List</title>
 </head>
+
 <body>
     <h1>Movie List</h1>
     <form>
         <input type="text" placeholder="Type Movie Title Here"/>
         <button>add movie</button>
     </form>
+    <section></section>
     
+    <script>
+        const addForm = document.querySelector('form');
+        const titleInput = document.querySelector('input');
+        const container = document.querySelector('section');
+
+        function putTheThingInTheView(res) {
+            container.innerHTML = ''
+            titleInput.value = ''
+
+            res.data.forEach((movieTitle, index) => {
+                container.innerHTML += `<p title=${index}>${movieTitle}</p>`
+            })
+
+            document.querySelectorAll('p').forEach(element => {
+                const theIndexValue = element.getAttribute('title');
+
+                element.addEventListener('click', () => {
+                    axios
+                        .delete(`api/movies/${theIndexValue}`)
+                        .then(res => {
+                            putTheThingInTheView(res)
+                        })
+                })
+            })
+        }
+
+        function submitHandler(evt) {
+            evt.preventDefault();
+
+            axios
+                .post('/api/movies', { title: titleInput.value })
+                .then(res => {
+                    putTheThingInTheView(res)
+                })
+                .catch(err => {
+                    titleInput.value = ''
+
+                    const notif = document.createElement('aside')
+                    notif.innerHTML = `<p>${err.response.data}</p>
+                    <button class="close">close</button>`
+                    document.body.appendChild(notif)
+
+                    document.querySelectorAll('.close').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.target.parentNode.remove()
+                        })
+                    })
+                })
+        }
+
+        //get movie list on initial load
+        axios
+        .get('/api/movies')
+        .then(res => {
+            putTheThingInTheView(res)
+        })
+
+        addForm.addEventListener('submit', submitHandler)
+
+    </script>
+
 </body>
 </html>
