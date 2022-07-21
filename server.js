@@ -21,7 +21,6 @@ rollbar.log('Hello world!')
 rollbar.critical("Crashed while entering a movie");
 
 const movies = ['Jurassic Park', 'The Truman Show', 'The Princess Bride']
-const names = ['Wes Craven', 'Christopher Nolan', 'Christopher McQuarrie']
 
 app.get('/', (req, res) => {
     rollbar.info("Someone loaded up your html")
@@ -33,27 +32,21 @@ app.get('/api/movies', (req, res) => {
     res.status(200).send(movies)
 })
 
-app.get('/api/names', (req, res) => {
-    rollbar.info("Someone got the list of directors to load!")
-    res.status(200).send(names)
-})
-
 app.post('/api/movies', (req, res) => {
     rollbar.warning("Make sure to capitalize movie titles, bro.")
    let {title} = req.body
 
    const index = movies.findIndex(movie => {
        return movie === title
-   })
-
-app.post('/api/names', (req, res) => {
-    rollbar.error("Not the name of a famous director.")
-    let {directorName} = req.body
-
-    const index = names.findIndex(name => {
-        return name === {directorName}
-    })
 })
+
+let nameBtn = document.createElement("button");
+nameBtn.innerHTML = "Enter";
+nameBtn.onclick = function () {
+    alert("Enter Name Button has been clicked.")
+    rollbar.error("List of names doesn't exist yet.")
+}
+document.body.appendChild(nameBtn);
 
    try {
     // try {
@@ -70,8 +63,8 @@ app.post('/api/names', (req, res) => {
            movies.push(title)
            res.status(200).send(movies)
        } else if (title === ''){
-        rollbar.error("No name h 0.provided.");
-           res.status(400).send('You must enter a name.')
+        rollbar.error("No title was provided.");
+           res.status(400).send('You must enter a title.')
        } else {
         rollbar.error("Movie already exists.")
            res.status(400).send('That movie already exists.')
