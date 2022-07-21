@@ -13,6 +13,10 @@
         <input type="text" placeholder="Type Movie Title Here"/>
         <button>add movie</button>
     </form>
+    <form>
+        <input type="text" placeholder="Type Your Name Here"/>
+        <button>add name</button>
+    </form>
     <section></section>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
@@ -27,6 +31,10 @@
 
             res.data.forEach((movieTitle, index) => {
                 container.innerHTML += `<p title=${index}>${movieTitle}</p>`
+
+            res.data.forEach((famousDirector, index) => {
+                container.innerHTML += `<p2 name=${index}>${famousDirector}</p2>`
+            })
             })
 
             document.querySelectorAll('p').forEach(element => {
@@ -37,6 +45,18 @@
                         .delete(`api/movies/${theIndexValue}`)
                         .then(res => {
                             putTheThingInTheView(res)
+
+            document.querySelectorAll('p2').forEach(element => {
+                const theIndexValue = element.getAttribute('name');
+
+                element.addEventListener('click', () => {
+                    axios
+                        .delete(`api/names/${theIndexvalue}`)
+                        .then(res => {
+                            putTheThingInTheView
+                        })
+                })
+            })
                         })
                 })
             })
@@ -66,6 +86,29 @@
                 })
         }
 
+        function submitHandlerAgain(evt) {
+            evt.preventDefault();
+            axios  
+                .post('/api/names', { name: nameInput.value })
+                .then(res => {
+                    putTheThingInTheView(res)
+                })
+                .catch(err => {
+                    nameInput.value =''
+
+                    const notif = document.createElement('aside')
+                    notif.innerHTML = `<p2>${err.response.data}</p>
+                    <button class = "closer">closer</button>`
+                    document.body.appendChild(notif)
+
+                    document.querySelectorAll('.closer').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.target.parentNode.remove()
+                        })
+                    })
+                })
+        }
+
         //get movie list on initial load
         axios
         .get('/api/movies')
@@ -75,6 +118,13 @@
 
         addForm.addEventListener('submit', submitHandler)
 
+        axios
+        .get('/api/names')
+        .then(res => {
+            putTheThingInTheView(res)
+        })
+
+        addForm.addEventListener('submit', submitHandlerAgain)
     </script>
 
 </body>

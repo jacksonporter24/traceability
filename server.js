@@ -21,6 +21,7 @@ rollbar.log('Hello world!')
 rollbar.critical("Crashed while entering a movie");
 
 const movies = ['Jurassic Park', 'The Truman Show', 'The Princess Bride']
+const names = ['Wes Craven', 'Christopher Nolan', 'Christopher McQuarrie']
 
 app.get('/', (req, res) => {
     rollbar.info("Someone loaded up your html")
@@ -29,17 +30,30 @@ app.get('/', (req, res) => {
 
 app.get('/api/movies', (req, res) => {
     rollbar.info("Someone got the list of movies to load.")
-    res.status(200).send(students)
+    res.status(200).send(movies)
+})
+
+app.get('/api/names', (req, res) => {
+    rollbar.info("Someone got the list of directors to load!")
+    res.status(200).send(names)
 })
 
 app.post('/api/movies', (req, res) => {
     rollbar.warning("Make sure to capitalize movie titles, bro.")
    let {title} = req.body
 
-
    const index = movies.findIndex(movie => {
        return movie === title
    })
+
+app.post('/api/names', (req, res) => {
+    rollbar.error("Not the name of a famous director.")
+    let {directorName} = req.body
+
+    const index = names.findIndex(name => {
+        return name === {directorName}
+    })
+})
 
    try {
     // try {
