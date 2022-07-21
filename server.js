@@ -18,6 +18,7 @@ var rollbar = new Rollbar({
 
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
+Rollbar.critical("Crash while processing payment");
 
 const movies = ['Jurassic Park', 'The Truman Show', 'The Princess Bride']
 
