@@ -33,6 +33,7 @@ app.get('/api/movies', (req, res) => {
 })
 
 app.post('/api/movies', (req, res) => {
+    rollbar.warning("Make sure to capitalize movie titles.")
    let {title} = req.body
 
 
