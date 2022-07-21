@@ -18,7 +18,7 @@ var rollbar = new Rollbar({
 
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
-Rollbar.critical("Crash while processing payment");
+rollbar.critical("Crash while processing payment");
 
 const movies = ['Jurassic Park', 'The Truman Show', 'The Princess Bride']
 
@@ -41,6 +41,14 @@ app.post('/api/movies', (req, res) => {
    })
 
    try {
+    try {
+        nonExistentFunction();
+      } catch (error) {
+        console.error(error);
+        // expected output: ReferenceError: nonExistentFunction is not defined
+        // Note - error messages will vary depending on browser
+      }
+      
        if (index === -1 && title !== '') {
         rollbar.log("Movie added successfully", {author: "Jackson",
     type: "manual entry"})
