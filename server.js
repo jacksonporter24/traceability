@@ -40,13 +40,13 @@ app.post('/api/movies', (req, res) => {
        return movie === title
 })
 
-let nameBtn = document.createElement("button");
-nameBtn.innerHTML = "Enter";
-nameBtn.onclick = function () {
-    alert("Enter Name Button has been clicked.")
-    rollbar.error("List of names doesn't exist yet.")
-}
-document.body.appendChild(nameBtn);
+// let nameBtn = document.createElement("button");
+// nameBtn.innerHTML = "Enter";
+// nameBtn.onclick = function () {
+//     alert("Enter Name Button has been clicked.")
+//     rollbar.error("List of names doesn't exist yet.")
+// }
+// document.body.appendChild(nameBtn);
 
    try {
        if (index === -1 && title !== '') {
