@@ -10,8 +10,8 @@ app.use(cors());
 var Rollbar = require('rollbar')
 const { setDefaultResultOrder } = require('dns')
 var rollbar = new Rollbar({
-//   accessToken: 'e291979a790641bca6320863a8725949',
-    accessToken: 'a3a56c39a4754509ba04ff574d173e84',
+  accessToken: 'e291979a790641bca6320863a8725949',
+    // accessToken: 'a3a56c39a4754509ba04ff574d173e84',
   captureUncaught: true,
   captureUnhandledRejections: true,
 })
@@ -61,7 +61,7 @@ app.post('/api/movies', (req, res) => {
 app.delete('/api/movies/:index', (req, res) => {
     const targetIndex = +req.params.index
     
-    students.splice(targetIndex, 1)
+    movies.splice(targetIndex, 1)
     rollbar.info("Movie")
     res.status(200).send("Movie was deleted.")
 })
