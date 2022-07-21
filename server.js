@@ -18,7 +18,7 @@ var rollbar = new Rollbar({
 
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
-// rollbar.critical("Crash while entering a movie");
+rollbar.critical("Crashed while entering a movie");
 
 const movies = ['Jurassic Park', 'The Truman Show', 'The Princess Bride']
 
@@ -33,7 +33,7 @@ app.get('/api/movies', (req, res) => {
 })
 
 app.post('/api/movies', (req, res) => {
-    // rollbar.warning("Make sure to capitalize movie titles.")
+    rollbar.warning("Make sure to capitalize movie titles, bro.")
    let {title} = req.body
 
 
