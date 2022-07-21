@@ -49,14 +49,6 @@ nameBtn.onclick = function () {
 document.body.appendChild(nameBtn);
 
    try {
-    // try {
-    //     nonExistentFunction();
-    //   } catch (error) {
-    //     console.error(error);
-    //     // expected output: ReferenceError: nonExistentFunction is not defined
-    //     // Note - error messages will vary depending on browser
-    //   }
-      
        if (index === -1 && title !== '') {
         rollbar.log("Movie added successfully", {author: "Jackson",
     type: "manual entry"})
